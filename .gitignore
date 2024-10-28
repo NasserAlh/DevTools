@@ -1,0 +1,6 @@
+# Generated files
+**/__pycache__/
+*.pyc
+
+# User-specific files
+*.log
