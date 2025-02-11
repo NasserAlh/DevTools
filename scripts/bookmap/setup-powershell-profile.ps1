@@ -8,7 +8,7 @@ if (!(Test-Path -Path $PROFILE)) {
 $profileContent = @'
 
 # Bookmap Development Tools Functions
-function New-BookmapProject { 
+function New-BookmapProject {
     & "$env:USERPROFILE\OneDrive\DevTools\bin\create-bookmap-project.bat"
 }
 Set-Alias bookmap_proj New-BookmapProject

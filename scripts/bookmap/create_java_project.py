@@ -25,26 +25,26 @@ public class TemplateWithLog implements CustomModule {
         Log.info("Bye");
     }
 }"""
-    
+
     with open(src_main_java / "TemplateWithLog.java", 'w') as f:
         f.write(template_content)
 
 def create_maven_project(project_name, base_path):
     """Create a Maven-based Java project structure."""
     project_path = Path(base_path) / project_name
-    
+
     # Create project directories
     src_main_java = project_path / "src" / "main" / "java"
     src_main_resources = project_path / "src" / "main" / "resources"
     src_test_java = project_path / "src" / "test" / "java"
     src_test_resources = project_path / "src" / "test" / "resources"
-    
+
     for dir_path in [src_main_java, src_main_resources, src_test_java, src_test_resources]:
         dir_path.mkdir(parents=True, exist_ok=True)
-    
+
     # Create template file
     create_template_file(src_main_java)
-    
+
     # Create pom.xml with the specified content
     pom_content = f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -158,18 +158,18 @@ mvnw.cmd
 
 def main():
     print("=== Java Project Creator ===")
-    
+
     # Get project name
     while True:
         project_name = input("\nEnter project name (only letters, numbers, and hyphens allowed): ").strip()
         if project_name and all(c.isalnum() or c == '-' for c in project_name):
             break
         print("Invalid project name. Please try again.")
-    
+
     # Get project location
     base_path = os.getcwd()
     project_path = Path(base_path) / project_name
-    
+
     # Check if project directory already exists
     if project_path.exists():
         print(f"\nWarning: Directory '{project_name}' already exists!")
@@ -178,24 +178,24 @@ def main():
             print("Project creation cancelled.")
             return
         shutil.rmtree(project_path)
-    
+
     # Create project
     try:
         create_maven_project(project_name, base_path)
         create_gitignore(project_path)
-        
+
         print(f"\nProject created successfully at: {project_path}")
         print("Created Maven project structure")
         print("Created pom.xml file")
         print("Created .gitignore file")
         print("Created TemplateWithLog.java template file")
-        
+
         print("\nNext steps:")
         print("1. cd", project_name)
         print("2. mvn compile    # To compile the project")
         print("3. mvn test       # To run tests")
         print("4. mvn package    # To create the JAR file")
-            
+
     except Exception as e:
         print(f"\nError creating project: {str(e)}")
 
